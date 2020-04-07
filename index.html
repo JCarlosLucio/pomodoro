@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro</title>
+    <script src="https://kit.fontawesome.com/12e197e6ab.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>PROJECT: POMODORO</h1>
+    </header>
+    <div class="content">
+        <main>
+            <section id="timer-settings">
+                <div class="container">
+                    <div class="settings">
+                        <span>Session</span>
+                        <p>
+                            <button id="subs-session-time">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <span id="session-time">25</span>
+                            <button id="add-session-time">
+                                <i class="fas fa-chevron-up"></i>
+                            </button>
+                        </p>
+                    </div>
+                    <div class="settings">
+                        <span>Break</span>
+                        <p>
+                            <button id="subs-break-time">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <span id="break-time">5</span>
+                            <button id="add-break-time">
+                                <i class="fas fa-chevron-up"></i>
+                            </button>
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <section id="timer">
+                <div class="container">
+                    <div id="circle">
+                        <h1 id="timer-time">
+                            25:00
+                        </h1>
+                    </div>
+                </div>
+            </section>
+            <section id="controls">
+                <div class="container">
+                    <button id="play">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button id="pause">
+                        <i class="fas fa-pause"></i>
+                    </button>
+                    <button id="stop">
+                        <i class="fas fa-stop"></i>
+                    </button>
+                    <button id="reset">
+                        <i class="fas fa-redo"></i>
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
