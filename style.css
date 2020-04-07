@@ -1,0 +1,51 @@
+html {
+    background: #200122;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #6f0000, #200122); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    margin: 0; 
+    color:white;
+    font-family: 'Montserrat', sans-serif;
+}
+
+button {
+    color: white;
+    background: none;
+    border: none;
+}
+
+.content {
+    padding-top: 3vh;
+}
+
+.container, .settings {
+    display: flex
+}
+
+.container {
+    justify-content: space-evenly;
+}
+
+.settings {
+    flex-direction: column;
+    text-align: center;
+}
+
+#timer-settings button, #timer-settings span {
+    font-size: 2rem;
+}
+
+#controls button{
+    font-size: 2.5rem;
+}
+
+#circle{
+    border: 1px solid white;
+    border-radius: 100%;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    font-size: 4rem; 
+}
