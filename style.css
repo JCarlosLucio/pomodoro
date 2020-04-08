@@ -8,6 +8,16 @@ html {
     font-family: 'Montserrat', sans-serif;
 }
 
+button {
+    color: white;
+    background: none;
+    border: none;
+}
+
+button:hover {
+    color: rgb(255, 238, 0);
+}
+
 .working{
     background: #200122;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to top, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
@@ -18,17 +28,6 @@ html {
     background: #360033;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to top, #0b8793, #360033);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to top, #0b8793, #360033); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    
-}
-
-button {
-    color: white;
-    background: none;
-    border: none;
-}
-
-button:hover {
-    color: rgb(255, 238, 0);
 }
 
 .content {
@@ -54,26 +53,12 @@ button:hover {
     width: 2.5rem;
 }
 
-#timer-settings button, #timer-settings span {
-    font-size: 2rem;
+#timer-time {
+    padding: 2rem 0 3rem 0;
 }
 
-#controls button{
-    font-size: 2.5rem;
-}
-#circle p {
-    font-size: 2rem;
-    height: 2.5rem;
-    width: 15rem;
-    text-align: center;
-    margin: 0;
-}
-
-#circle h1 {
-    width: 15rem;
-    text-align: center;
-    padding: 2rem 0 4rem 0;
-    margin: 0;
+#spent-time{
+    font-size: 1.5rem;
 }
 
 #circle{
@@ -88,4 +73,22 @@ button:hover {
     font-size: 2.9rem; 
     width: 16rem;
     height: 16rem;
+}
+
+#state, #spent-time {
+    height: 2.5rem;
+}
+
+#timer-time, #spent-time, #state {
+    margin: 0;
+    width: 15rem;
+    text-align: center;
+}
+
+#controls button{
+    font-size: 2.5rem;
+}
+
+#timer-settings button, #timer-settings span, #state {
+    font-size: 2rem;
 }
