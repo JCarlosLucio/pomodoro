@@ -12,20 +12,53 @@ const pause = document.querySelector('#pause');
 const stop = document.querySelector('#stop');
 const reset = document.querySelector('#reset');
 
-function timer(time) {
-    // const now = Date.now();
-    const secs = Number(time);
-    const startTime = Date.now() + (secs * 1000);
-    timerDisplay(secs);
-    // countdown function
-    countdown(startTime);
+const body = document.querySelector('#body');
+const state = document.querySelector('#state');
+
+let interval;
+let secondsCountdown;
+let pomodoro = 0;
+
+function timer(timeInSeconds) {
+    countdown(timeInSeconds);
+}
+function breakTimer(timeInSeconds) {
+    countdown(timeInSeconds);
 }
 
-function countdown(start) {
+function switchState() {
+    body.classList.toggle('working');
+    body.classList.toggle('relaxing');
+}
+
+function countdown(timeInSeconds) {
+    const startTime = Date.now() + (Number(timeInSeconds) * 1000);
     interval = setInterval(() => {
-        secondsCountdown = Math.round((start - Date.now()) / 1000);
+        secondsCountdown = Math.round((startTime - Date.now()) / 1000);
         if (secondsCountdown < 0) {
             clearInterval(interval);
+            secondsCountdown = 0;
+            pomodoro++
+            timerDisplay(breakTime.innerHTML * 60);
+            // ADD CHANGE OF BACKGROUND COLOR
+            // AND CHANGE OF STATE FROM SESSION TO BREAK
+            switchState();
+            state.innerHTML = 'Relaxing';
+            // ADD COUNTER OF TIMES FOR SESSION AND BREAKS
+            // DISABLE SESSION BUTTONS WHILE TIMER IS ON - RENABLE WITH STOP/ or smth
+            breakTimer(breakTime.innerHTML * 60);
+            // IF STATEMENT ...
+            // Add Loop for Session Timer to start again!!!
+            if (secondsCountdown < 0) {
+                clearInterval(interval);
+                secondsCountdown = 0;
+                timerDisplay(sessionTime.innerHTML * 60);
+                switchState();
+                state.innerHTML = 'Working';
+                timer(sessionTime.innerHTML * 60);
+            } else {
+                timerDisplay(secondsCountdown);
+            }
         } else {
             timerDisplay(secondsCountdown);
         }
@@ -63,6 +96,7 @@ modifySettings(breakTime, decreaseBreak);
 
 // Play 
 play.addEventListener('click', (e) => {
+    // STATE ?? WHEN PLAY
     timer(sessionTime.innerHTML * 60);
 });
 
@@ -74,7 +108,10 @@ stop.addEventListener('click', (e) => {
 
 // Reset Button
 reset.addEventListener('click', (e) => {
+    clearInterval(interval);
     sessionTime.innerHTML = 1;
     breakTime.innerHTML = 1;
+    body.classList.add('working');
+    body.classList.remove('relaxing');
     timerDisplay(sessionTime.innerHTML * 60);
 })
