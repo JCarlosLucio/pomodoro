@@ -1,10 +1,10 @@
 const sessionTime = document.querySelector('#session-time');
-const addSessionTime = document.querySelector('#add-session-time');
-const subsSessionTime = document.querySelector('#subs-session-time');
+const increaseSession = document.querySelector('#increase-session');
+const decreaseSession = document.querySelector('#decrease-session');
 
 const breakTime = document.querySelector('#break-time');
-const addBreakTime = document.querySelector('#add-break-time');
-const subsBreakTime = document.querySelector('#subs-break-time');
+const increaseBreak = document.querySelector('#increase-break');
+const decreaseBreak = document.querySelector('#decrease-break');
 
 const timerTime = document.querySelector('#timer-time');
 
@@ -13,30 +13,55 @@ const pause = document.querySelector('#pause');
 const stop = document.querySelector('#stop');
 const reset = document.querySelector('#reset');
 
-function timeDisplay(time) {
-    timerTime.innerHTML = `${time}:00`;
+function timer(time) {
+    const now = Date.now();
+    const secs = Number(time) * 60;
+    const startTime = now + secs * 1000;
+    timerDisplay(secs);
+    // countdown function
 }
 
-addSessionTime.addEventListener('click', (e) => {
-    sessionTime.innerHTML = Number(sessionTime.innerHTML) + 1;
-    timeDisplay(sessionTime.innerHTML);
-});
-subsSessionTime.addEventListener('click', (e) => {
-    if (Number(sessionTime.innerHTML > 1)) {
-        sessionTime.innerHTML = Number(sessionTime.innerHTML) - 1;
+// function countdown(start){
+
+// }
+
+function increase(time) {
+    time.innerHTML = Number(time.innerHTML) + 1;
+}
+function decrease(time) {
+    if (Number(time.innerHTML) > 1) {
+        time.innerHTML = Number(time.innerHTML) - 1;
     }
-    timeDisplay(sessionTime.innerHTML);
+}
+
+
+function timerDisplay(time) {
+    let timerMins = Number(time);
+    let timerSecs = (timerMins * 60) % 60;
+    timerTime.innerHTML = `${timerMins > 9 ? timerMins : '0' + timerMins}:${timerSecs > 9 ? timerSecs : '0' + timerSecs}`;
+}
+
+// Increase and Decrese Session Time
+increaseSession.addEventListener('click', (e) => {
+    increase(sessionTime);
+    timerDisplay(sessionTime.innerHTML);
 });
-addBreakTime.addEventListener('click', (e) => {
-    breakTime.innerHTML = Number(breakTime.innerHTML) + 1;
+decreaseSession.addEventListener('click', (e) => {
+    decrease(sessionTime);
+    timerDisplay(sessionTime.innerHTML);
 });
-subsBreakTime.addEventListener('click', (e) => {
-    if (Number(breakTime.innerHTML) > 1) {
-        breakTime.innerHTML = Number(breakTime.innerHTML) - 1;
-    }
+
+// Increase and Decrese Break Time
+increaseBreak.addEventListener('click', (e) => {
+    increase(breakTime);
 });
+decreaseBreak.addEventListener('click', (e) => {
+    decrease(breakTime);
+});
+
+// Reset Button
 reset.addEventListener('click', (e) => {
-    sessionTime.innerHTML = 25;
-    breakTime.innerHTML = 5;
-    timeDisplay(sessionTime.innerHTML);
+    sessionTime.innerHTML = 1;
+    breakTime.innerHTML = 1;
+    timerDisplay(sessionTime.innerHTML);
 })
