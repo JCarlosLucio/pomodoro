@@ -13,20 +13,26 @@ const stop = document.querySelector('#stop');
 const reset = document.querySelector('#reset');
 
 function timer(time) {
-    const now = Date.now();
-    const secs = Number(time) * 60;
-    const startTime = now + secs * 1000;
+    // const now = Date.now();
+    const secs = Number(time);
+    const startTime = Date.now() + (secs * 1000);
     timerDisplay(secs);
+
     // countdown function
+    countdown(startTime);
 }
 
-// function countdown(start){
+function countdown(start) {
+    setInterval(() => {
+        secondsCountdown = Math.round((start - Date.now()) / 1000);
 
-// }
+        timerDisplay(secondsCountdown);
+    }, 1000);
+}
 
-function timerDisplay(time) {
-    let timerMins = Number(time);
-    let timerSecs = (timerMins * 60) % 60;
+function timerDisplay(timeInSeconds) {
+    let timerMins = Math.floor(Number(timeInSeconds) / (60));
+    let timerSecs = Number(timeInSeconds) % 60;
     timerTime.innerHTML = `${timerMins > 9 ? timerMins : '0' + timerMins}:${timerSecs > 9 ? timerSecs : '0' + timerSecs}`;
 }
 
@@ -34,16 +40,16 @@ function timerDisplay(time) {
 function modifySettings(time, btn) {
     btn.addEventListener('click', (e) => {
         let modifier = 0;
-        if (btn.id.includes('increase')){
+        if (btn.id.includes('increase')) {
             modifier = 1;
         } else {
-            if(time.innerHTML > 1){
+            if (time.innerHTML > 1) {
                 modifier = -1;
             }
         }
         time.innerHTML = Number(time.innerHTML) + modifier;
         if (time.id === 'session-time') {
-            timerDisplay(time.innerHTML);
+            timerDisplay(time.innerHTML * 60);
         }
     });
 }
@@ -57,5 +63,5 @@ modifySettings(breakTime, decreaseBreak);
 reset.addEventListener('click', (e) => {
     sessionTime.innerHTML = 1;
     breakTime.innerHTML = 1;
-    timerDisplay(sessionTime.innerHTML);
+    timerDisplay(sessionTime.innerHTML * 60);
 })
