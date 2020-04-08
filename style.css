@@ -1,7 +1,4 @@
 html {
-    background: #200122;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to top, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to top, #6f0000, #200122); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     background-repeat: no-repeat;
     background-size: cover;
     height: 100%;
@@ -9,6 +6,19 @@ html {
     margin: 0; 
     color:white;
     font-family: 'Montserrat', sans-serif;
+}
+
+.working{
+    background: #200122;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #6f0000, #200122); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.relaxing{
+    background: #360033;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #0b8793, #360033);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #0b8793, #360033); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
 }
 
 button {
@@ -51,13 +61,24 @@ button:hover {
 #controls button{
     font-size: 2.5rem;
 }
+#circle p {
+    font-size: 2rem;
+    height: 2.5rem;
+    width: 15rem;
+    text-align: center;
+    margin: 0;
+}
 
 #circle h1 {
+    width: 15rem;
+    text-align: center;
+    padding: 2rem 0 4rem 0;
     margin: 0;
 }
 
 #circle{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     border: 1px solid white;
