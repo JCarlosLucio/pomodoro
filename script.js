@@ -17,16 +17,18 @@ function timer(time) {
     const secs = Number(time);
     const startTime = Date.now() + (secs * 1000);
     timerDisplay(secs);
-
     // countdown function
     countdown(startTime);
 }
 
 function countdown(start) {
-    setInterval(() => {
+    interval = setInterval(() => {
         secondsCountdown = Math.round((start - Date.now()) / 1000);
-
-        timerDisplay(secondsCountdown);
+        if (secondsCountdown < 0) {
+            clearInterval(interval);
+        } else {
+            timerDisplay(secondsCountdown);
+        }
     }, 1000);
 }
 
@@ -58,6 +60,17 @@ modifySettings(sessionTime, increaseSession);
 modifySettings(breakTime, increaseBreak);
 modifySettings(sessionTime, decreaseSession);
 modifySettings(breakTime, decreaseBreak);
+
+// Play 
+play.addEventListener('click', (e) => {
+    timer(sessionTime.innerHTML * 60);
+});
+
+// Stop
+stop.addEventListener('click', (e) => {
+    clearInterval(interval);
+    timerDisplay(sessionTime.innerHTML * 60);
+})
 
 // Reset Button
 reset.addEventListener('click', (e) => {
