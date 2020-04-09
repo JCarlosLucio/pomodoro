@@ -19,6 +19,7 @@ const relaxedTime = document.querySelector('#relaxed-time');
 
 let interval;
 let secondsCountdown;
+let pausedWhile;
 let worked = 0;
 let relaxed = 0;
 
@@ -31,7 +32,7 @@ function breakTimer(timeInSeconds) {
     countdown(timeInSeconds);
 }
 
-function switchState() {
+function switchStateBg() {
     body.classList.toggle('working');
     body.classList.toggle('relaxing');
 }
@@ -43,20 +44,19 @@ function countdown(timeInSeconds) {
         if (secondsCountdown < 0) {
             clearInterval(interval);
             secondsCountdown = 0;
-            switchState();
+            switchStateBg();
             // IF STATEMENT ... TO DECIDE WHICH TIMER TO RUN (SESSION OR BREAK)
-            // Add Loop for Session Timer to start again!!!
+            // Use Recursion to make Timer loop!!!
             // ADD COUNTER OF TIMES FOR SESSION AND BREAKS
-            // DISABLE SESSION BUTTONS WHILE TIMER IS ON - RENABLE WITH STOP/ or smth
             if (state.innerHTML === 'Working') {
                 timerDisplay(breakTime.innerHTML * 60);
-                worked += Number(timeInSeconds / 60);
+                worked += Number(sessionTime.innerHTML);
                 timeSpentDisplay(worked)
                 state.innerHTML = 'Relaxing';
                 breakTimer(breakTime.innerHTML * 60);
             } else {
                 timerDisplay(sessionTime.innerHTML * 60);
-                relaxed += Number(timeInSeconds / 60);
+                relaxed += Number(breakTime.innerHTML);
                 timeSpentDisplay(relaxed);
                 state.innerHTML = 'Working';
                 timer(sessionTime.innerHTML * 60);
@@ -70,7 +70,7 @@ function countdown(timeInSeconds) {
 function timeSpentDisplay(timeInMinutes) {
     let spentMins = timeInMinutes % 60;
     let spentHrs = Math.floor(timeInMinutes / 60);
-    if (state.innerHTML=== 'Relaxing'){
+    if (state.innerHTML === 'Relaxing') {
         relaxedTime.innerHTML = `${spentHrs > 9 ? spentHrs : '0' + spentHrs}h${spentMins > 9 ? spentMins : '0' + spentMins}m`;
     } else {
         workedTime.innerHTML = `${spentHrs > 9 ? spentHrs : '0' + spentHrs}h${spentMins > 9 ? spentMins : '0' + spentMins}m`;
@@ -109,14 +109,31 @@ modifySettings(breakTime, decreaseBreak);
 // Play 
 play.addEventListener('click', (e) => {
     // STATE ?? WHEN PLAY
-    
-    timer(sessionTime.innerHTML * 60);
+    if (state.innerHTML === '') {
+        timer(sessionTime.innerHTML * 60);
+    } else if (state.innerHTML === 'Paused') {
+        if (pausedWhile === 'Working') {
+            state.innerHTML = 'Working'
+            timer(secondsCountdown);
+        } else if (pausedWhile === 'Relaxing') {
+            state.innerHTML = 'Relaxing'
+            breakTimer(secondsCountdown);
+        }
+    }
+});
+
+// Pause
+pause.addEventListener('click', (e) => {
+    clearInterval(interval);
+    timerDisplay(secondsCountdown);
+    pausedWhile = state.innerHTML;
+    state.innerHTML = 'Paused';
 });
 
 // Stop
 stop.addEventListener('click', (e) => {
     clearInterval(interval);
-    if (state.innerHTML==='Working'){
+    if (state.innerHTML === 'Working') {
         timerDisplay(sessionTime.innerHTML * 60);
     } else {
         timerDisplay(breakTime.innerHTML * 60);
