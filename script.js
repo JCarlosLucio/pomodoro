@@ -14,15 +14,20 @@ const reset = document.querySelector('#reset');
 
 const body = document.querySelector('#body');
 const state = document.querySelector('#state');
+const workedTime = document.querySelector('#worked-time');
+const relaxedTime = document.querySelector('#relaxed-time');
 
 let interval;
 let secondsCountdown;
-let pomodoro = 0;
+let worked = 0;
+let relaxed = 0;
 
 function timer(timeInSeconds) {
+    state.innerHTML = 'Working';
     countdown(timeInSeconds);
 }
 function breakTimer(timeInSeconds) {
+    state.innerHTML = 'Relaxing';
     countdown(timeInSeconds);
 }
 
@@ -38,31 +43,38 @@ function countdown(timeInSeconds) {
         if (secondsCountdown < 0) {
             clearInterval(interval);
             secondsCountdown = 0;
-            pomodoro++
-            timerDisplay(breakTime.innerHTML * 60);
-            // ADD CHANGE OF BACKGROUND COLOR
-            // AND CHANGE OF STATE FROM SESSION TO BREAK
             switchState();
-            state.innerHTML = 'Relaxing';
+            // IF STATEMENT ... TO DECIDE WHICH TIMER TO RUN (SESSION OR BREAK)
+            // Add Loop for Session Timer to start again!!!
             // ADD COUNTER OF TIMES FOR SESSION AND BREAKS
             // DISABLE SESSION BUTTONS WHILE TIMER IS ON - RENABLE WITH STOP/ or smth
-            breakTimer(breakTime.innerHTML * 60);
-            // IF STATEMENT ...
-            // Add Loop for Session Timer to start again!!!
-            if (secondsCountdown < 0) {
-                clearInterval(interval);
-                secondsCountdown = 0;
+            if (state.innerHTML === 'Working') {
+                timerDisplay(breakTime.innerHTML * 60);
+                worked += Number(timeInSeconds / 60);
+                timeSpentDisplay(worked)
+                state.innerHTML = 'Relaxing';
+                breakTimer(breakTime.innerHTML * 60);
+            } else {
                 timerDisplay(sessionTime.innerHTML * 60);
-                switchState();
+                relaxed += Number(timeInSeconds / 60);
+                timeSpentDisplay(relaxed);
                 state.innerHTML = 'Working';
                 timer(sessionTime.innerHTML * 60);
-            } else {
-                timerDisplay(secondsCountdown);
             }
         } else {
             timerDisplay(secondsCountdown);
         }
     }, 1000);
+}
+
+function timeSpentDisplay(timeInMinutes) {
+    let spentMins = timeInMinutes % 60;
+    let spentHrs = Math.floor(timeInMinutes / 60);
+    if (state.innerHTML=== 'Relaxing'){
+        relaxedTime.innerHTML = `${spentHrs > 9 ? spentHrs : '0' + spentHrs}h${spentMins > 9 ? spentMins : '0' + spentMins}m`;
+    } else {
+        workedTime.innerHTML = `${spentHrs > 9 ? spentHrs : '0' + spentHrs}h${spentMins > 9 ? spentMins : '0' + spentMins}m`;
+    }
 }
 
 function timerDisplay(timeInSeconds) {
@@ -97,13 +109,18 @@ modifySettings(breakTime, decreaseBreak);
 // Play 
 play.addEventListener('click', (e) => {
     // STATE ?? WHEN PLAY
+    
     timer(sessionTime.innerHTML * 60);
 });
 
 // Stop
 stop.addEventListener('click', (e) => {
     clearInterval(interval);
-    timerDisplay(sessionTime.innerHTML * 60);
+    if (state.innerHTML==='Working'){
+        timerDisplay(sessionTime.innerHTML * 60);
+    } else {
+        timerDisplay(breakTime.innerHTML * 60);
+    }
 })
 
 // Reset Button
@@ -111,6 +128,11 @@ reset.addEventListener('click', (e) => {
     clearInterval(interval);
     sessionTime.innerHTML = 1;
     breakTime.innerHTML = 1;
+    state.innerHTML = '';
+    worked = 0;
+    relaxed = 0;
+    workedTime.innerHTML = 0;
+    relaxedTime.innerHTML = 0;
     body.classList.add('working');
     body.classList.remove('relaxing');
     timerDisplay(sessionTime.innerHTML * 60);
