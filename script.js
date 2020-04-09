@@ -15,6 +15,7 @@ const body = document.querySelector('#body');
 const state = document.querySelector('#state');
 const workedTime = document.querySelector('#worked-time');
 const relaxedTime = document.querySelector('#relaxed-time');
+const sound = document.querySelector('#sound');
 
 let interval;
 let secondsCountdown;
@@ -44,6 +45,7 @@ function countdown(timeInSeconds) {
         if (secondsCountdown < 0) {
             clearInterval(interval);
             secondsCountdown = 0;
+            sound.play();
             switchStateBg();
             // IF STATEMENT ... TO DECIDE WHICH TIMER TO RUN (SESSION OR BREAK)
             // Use Recursion to make Timer loop!!!
