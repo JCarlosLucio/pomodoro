@@ -48,17 +48,17 @@ button:hover {
 
 }
 
+.spent-time{
+    font-size: 1.2rem;
+}
+
 .settings p span{
     display: inline-block;
     width: 2.5rem;
 }
 
 #timer-time {
-    padding: 2rem 0 3rem 0;
-}
-
-#spent-time{
-    font-size: 1.5rem;
+    padding: 2rem 0 1rem 0;
 }
 
 #circle{
@@ -75,11 +75,11 @@ button:hover {
     height: 16rem;
 }
 
-#state, #spent-time {
+#state, .spent-time {
     height: 2.5rem;
 }
 
-#timer-time, #spent-time, #state {
+#timer-time, .spent-time, #state {
     margin: 0;
     width: 15rem;
     text-align: center;
