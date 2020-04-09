@@ -88,7 +88,7 @@ function modifySettings(timeInMinutes, btn) {
     btn.addEventListener('click', (e) => {
         let modifier = 0;
         if (btn.id.includes('increase')) {
-            if (timeInMinutes.innerHTML < 60){
+            if (timeInMinutes.innerHTML < 60) {
                 modifier = 1;
             }
         } else {
@@ -144,6 +144,9 @@ stop.addEventListener('click', (e) => {
     clearInterval(interval);
     playPause.firstElementChild.classList.remove('fa-pause');
     playPause.firstElementChild.classList.add('fa-play');
+    if (state.innerHTML === 'Paused') {
+        state.innerHTML = pausedWhile;
+    }
     stoppedWhile = state.innerHTML;
     if (stoppedWhile === 'Working') {
         timerDisplay(sessionTime.innerHTML * 60);
@@ -159,7 +162,7 @@ reset.addEventListener('click', (e) => {
     playPause.firstElementChild.classList.remove('fa-pause');
     playPause.firstElementChild.classList.add('fa-play');
     stoppedWhile = 'Working';
-    pausedWhile='Working';
+    pausedWhile = 'Working';
     sessionTime.innerHTML = 25;
     breakTime.innerHTML = 5;
     state.innerHTML = '';
