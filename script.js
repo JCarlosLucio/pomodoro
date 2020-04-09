@@ -7,8 +7,7 @@ const decreaseSession = document.querySelector('#decrease-session');
 const increaseBreak = document.querySelector('#increase-break');
 const decreaseBreak = document.querySelector('#decrease-break');
 
-const play = document.querySelector('#play');
-const pause = document.querySelector('#pause');
+const playPause = document.querySelector('#play-pause');
 const stop = document.querySelector('#stop');
 const reset = document.querySelector('#reset');
 
@@ -19,7 +18,8 @@ const relaxedTime = document.querySelector('#relaxed-time');
 
 let interval;
 let secondsCountdown;
-let pausedWhile;
+let pausedWhile = 'Working';
+let stoppedWhile = 'Working';
 let worked = 0;
 let relaxed = 0;
 
@@ -84,19 +84,21 @@ function timerDisplay(timeInSeconds) {
 }
 
 // Increase or Decrease Settings Time (Session or Break Time)
-function modifySettings(time, btn) {
+function modifySettings(timeInMinutes, btn) {
     btn.addEventListener('click', (e) => {
         let modifier = 0;
         if (btn.id.includes('increase')) {
-            modifier = 1;
+            if (timeInMinutes.innerHTML < 60){
+                modifier = 1;
+            }
         } else {
-            if (time.innerHTML > 1) {
+            if (timeInMinutes.innerHTML > 1) {
                 modifier = -1;
             }
         }
-        time.innerHTML = Number(time.innerHTML) + modifier;
-        if (time.id === 'session-time') {
-            timerDisplay(time.innerHTML * 60);
+        timeInMinutes.innerHTML = Number(timeInMinutes.innerHTML) + modifier;
+        if (timeInMinutes.id === 'session-time') {
+            timerDisplay(timeInMinutes.innerHTML * 60);
         }
     });
 }
@@ -107,44 +109,59 @@ modifySettings(sessionTime, decreaseSession);
 modifySettings(breakTime, decreaseBreak);
 
 // Play 
-play.addEventListener('click', (e) => {
+playPause.addEventListener('click', (e) => {
     // STATE ?? WHEN PLAY
-    if (state.innerHTML === '') {
-        timer(sessionTime.innerHTML * 60);
-    } else if (state.innerHTML === 'Paused') {
-        if (pausedWhile === 'Working') {
-            state.innerHTML = 'Working'
-            timer(secondsCountdown);
-        } else if (pausedWhile === 'Relaxing') {
-            state.innerHTML = 'Relaxing'
-            breakTimer(secondsCountdown);
+    if (playPause.firstElementChild.classList[1] === 'fa-play') {
+        playPause.firstElementChild.classList.remove('fa-play');
+        playPause.firstElementChild.classList.add('fa-pause');
+        if (state.innerHTML === '') {
+            if (stoppedWhile === 'Working') {
+                timer(sessionTime.innerHTML * 60);
+            } else if (stoppedWhile === 'Relaxing') {
+                breakTimer(breakTime.innerHTML * 60);
+            }
+        } else if (state.innerHTML === 'Paused') {
+            if (pausedWhile === 'Working') {
+                state.innerHTML = 'Working'
+                timer(secondsCountdown);
+            } else if (pausedWhile === 'Relaxing') {
+                state.innerHTML = 'Relaxing'
+                breakTimer(secondsCountdown);
+            }
         }
+    } else if (playPause.firstElementChild.classList[1] === 'fa-pause') {
+        playPause.firstElementChild.classList.remove('fa-pause');
+        playPause.firstElementChild.classList.add('fa-play');
+        clearInterval(interval);
+        timerDisplay(secondsCountdown);
+        pausedWhile = state.innerHTML;
+        state.innerHTML = 'Paused';
     }
-});
-
-// Pause
-pause.addEventListener('click', (e) => {
-    clearInterval(interval);
-    timerDisplay(secondsCountdown);
-    pausedWhile = state.innerHTML;
-    state.innerHTML = 'Paused';
 });
 
 // Stop
 stop.addEventListener('click', (e) => {
     clearInterval(interval);
-    if (state.innerHTML === 'Working') {
+    playPause.firstElementChild.classList.remove('fa-pause');
+    playPause.firstElementChild.classList.add('fa-play');
+    stoppedWhile = state.innerHTML;
+    if (stoppedWhile === 'Working') {
         timerDisplay(sessionTime.innerHTML * 60);
-    } else {
+    } else if (stoppedWhile === 'Relaxing') {
         timerDisplay(breakTime.innerHTML * 60);
     }
+    state.innerHTML = '';
 })
 
 // Reset Button
 reset.addEventListener('click', (e) => {
     clearInterval(interval);
-    sessionTime.innerHTML = 1;
-    breakTime.innerHTML = 1;
+    playPause.firstElementChild.classList.remove('fa-pause');
+    playPause.firstElementChild.classList.add('fa-play');
+    stoppedWhile = 'Working';
+    pausedWhile='Working';
+    sessionTime.innerHTML = 25;
+    breakTime.innerHTML = 5;
     state.innerHTML = '';
     worked = 0;
     relaxed = 0;
