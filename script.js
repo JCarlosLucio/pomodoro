@@ -100,11 +100,11 @@ function modifySettings(timeInMinutes, btn) {
         }
         timeInMinutes.innerHTML = Number(timeInMinutes.innerHTML) + modifier;
         // Only change if state ''
-        if (state.innerHTML === ''){
+        if (state.innerHTML === '') {
             // Only change the timer display to show whichever time is on at the moment
-            if (body.classList.value === 'working' && timeInMinutes.id === 'session-time' ){
+            if (body.classList.value === 'working' && timeInMinutes.id === 'session-time') {
                 timerDisplay(timeInMinutes.innerHTML * 60);
-            } else if (body.classList.value === 'relaxing' && timeInMinutes.id === 'break-time'){
+            } else if (body.classList.value === 'relaxing' && timeInMinutes.id === 'break-time') {
                 timerDisplay(timeInMinutes.innerHTML * 60);
             }
         }
@@ -149,19 +149,21 @@ playPause.addEventListener('click', (e) => {
 
 // Stop
 stop.addEventListener('click', (e) => {
-    clearInterval(interval);
-    playPause.firstElementChild.classList.remove('fa-pause');
-    playPause.firstElementChild.classList.add('fa-play');
-    if (state.innerHTML === 'Paused') {
-        state.innerHTML = pausedWhile;
+    if (state.innerHTML != '') {
+        clearInterval(interval);
+        playPause.firstElementChild.classList.remove('fa-pause');
+        playPause.firstElementChild.classList.add('fa-play');
+        if (state.innerHTML === 'Paused') {
+            state.innerHTML = pausedWhile;
+        }
+        stoppedWhile = state.innerHTML;
+        if (stoppedWhile === 'Working') {
+            timerDisplay(sessionTime.innerHTML * 60);
+        } else if (stoppedWhile === 'Relaxing') {
+            timerDisplay(breakTime.innerHTML * 60);
+        }
+        state.innerHTML = '';
     }
-    stoppedWhile = state.innerHTML;
-    if (stoppedWhile === 'Working') {
-        timerDisplay(sessionTime.innerHTML * 60);
-    } else if (stoppedWhile === 'Relaxing') {
-        timerDisplay(breakTime.innerHTML * 60);
-    }
-    state.innerHTML = '';
 })
 
 // Reset Button
