@@ -99,11 +99,14 @@ function modifySettings(timeInMinutes, btn) {
             }
         }
         timeInMinutes.innerHTML = Number(timeInMinutes.innerHTML) + modifier;
-        // Only change the timer display to show whichever time is on at the moment
-        if (body.classList.value === 'working' && timeInMinutes.id === 'session-time' ){
-            timerDisplay(timeInMinutes.innerHTML * 60);
-        } else if (body.classList.value === 'relaxing' && timeInMinutes.id === 'break-time'){
-            timerDisplay(timeInMinutes.innerHTML * 60);
+        // Only change if state ''
+        if (state.innerHTML === ''){
+            // Only change the timer display to show whichever time is on at the moment
+            if (body.classList.value === 'working' && timeInMinutes.id === 'session-time' ){
+                timerDisplay(timeInMinutes.innerHTML * 60);
+            } else if (body.classList.value === 'relaxing' && timeInMinutes.id === 'break-time'){
+                timerDisplay(timeInMinutes.innerHTML * 60);
+            }
         }
     });
 }
