@@ -18,7 +18,7 @@ button {
 }
 
 button:hover {
-    color: rgb(255, 238, 0);
+    text-shadow: 0 0 15px white;
 }
 
 .working{
