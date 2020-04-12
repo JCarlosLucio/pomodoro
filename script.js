@@ -99,7 +99,10 @@ function modifySettings(timeInMinutes, btn) {
             }
         }
         timeInMinutes.innerHTML = Number(timeInMinutes.innerHTML) + modifier;
-        if (timeInMinutes.id === 'session-time') {
+        // Only change the timer display to show whichever time is on at the moment
+        if (body.classList.value === 'working' && timeInMinutes.id === 'session-time' ){
+            timerDisplay(timeInMinutes.innerHTML * 60);
+        } else if (body.classList.value === 'relaxing' && timeInMinutes.id === 'break-time'){
             timerDisplay(timeInMinutes.innerHTML * 60);
         }
     });
